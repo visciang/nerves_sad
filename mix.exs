@@ -4,12 +4,11 @@ defmodule NervesSAD.Mixfile do
   def project do
     [
       app: :nerves_sad,
-      version: "1.0.0",
+      version: "1.0.1",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       test_coverage: [tool: ExCoveralls],
-      deps: deps(),
-      docs: docs()
+      deps: deps()
     ]
   end
 
@@ -20,14 +19,6 @@ defmodule NervesSAD.Mixfile do
   defp deps do
     [
       {:excoveralls, "~> 0.7.3", only: :test},
-      {:ex_doc, "~> 0.16", only: :dev, runtime: false}
-    ]
-  end
-
-  defp docs do
-    [
-      source_url: "https://github.com/visciang/nerves_sad",
-      extras: ["README.md"],
     ]
   end
 end
