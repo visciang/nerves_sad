@@ -38,12 +38,12 @@ defmodule NervesSAD do
     defstruct [:runner, :callers_queue]
   end
 
-  def start_link(name, fun, timeout \\ 4000) do
+  def start_link(name, fun, timeout \\ 5000) do
     GenServer.start_link(__MODULE__, [fun, timeout], name: name)
   end
 
-  def read(ref, timeout \\ 5000) do
-    GenServer.call(ref, :read, timeout)
+  def read(ref) do
+    GenServer.call(ref, :read, :infinity)
   end
 
   @impl GenServer

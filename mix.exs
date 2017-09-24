@@ -4,7 +4,7 @@ defmodule NervesSAD.Mixfile do
   def project do
     [
       app: :nerves_sad,
-      version: "1.0.1",
+      version: "1.1.0",
       elixir: "~> 1.5",
       start_permanent: Mix.env == :prod,
       test_coverage: [tool: ExCoveralls],
@@ -18,7 +18,7 @@ defmodule NervesSAD.Mixfile do
 
   defp deps do
     [
-      {:excoveralls, "~> 0.7.3", only: :test},
+      {:excoveralls, "~> 0.7.3", only: :test}
     ]
   end
 end
