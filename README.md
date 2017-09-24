@@ -11,7 +11,7 @@ The package can be installed by adding `nerves_sad` to your list of dependencies
 ```elixir
 def deps do
   [
-    {:nerves_dht, git: "https://github.com/visciang/nerves_sad.git", tag: "xxx"}
+    {:nerves_sad, git: "https://github.com/visciang/nerves_sad.git", tag: "xxx"}
   ]
 end
 ```
