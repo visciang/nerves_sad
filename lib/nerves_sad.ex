@@ -18,15 +18,23 @@ defmodule NervesSAD do
     end
 
     @impl GenServer
-    def handle_cast(:read, %State{father: father, fun: fun, timeout: timeout}=state) do
+    def init(args) do
+      {:ok, args}
+    end
+
+    @impl GenServer
+    def handle_cast(:read, %State{father: father, fun: fun, timeout: timeout} = state) do
       task = Task.async(fun)
+
       case Task.yield(task, timeout) do
         {:ok, result} ->
           GenServer.cast(father, {:result, result})
+
         nil ->
           Task.shutdown(task)
           GenServer.cast(father, {:result, {:error, :timeout}})
       end
+
       {:noreply, state}
     end
   end
@@ -53,24 +61,24 @@ defmodule NervesSAD do
   end
 
   @impl GenServer
-  def handle_call(:read, from, %State{runner: runner, callers_queue: []}=state) do
+  def handle_call(:read, from, %State{runner: runner, callers_queue: []} = state) do
     GenServer.cast(runner, :read)
     {:noreply, %State{state | callers_queue: [from]}}
   end
 
   @impl GenServer
-  def handle_call(:read, from, %State{callers_queue: callers_queue}=state) do
+  def handle_call(:read, from, %State{callers_queue: callers_queue} = state) do
     {:noreply, %State{state | callers_queue: [from | callers_queue]}}
   end
 
   @impl GenServer
-  def handle_cast({:result, result}, %State{callers_queue: callers_queue}=state)
+  def handle_cast({:result, result}, %State{callers_queue: callers_queue} = state)
       when callers_queue != [] do
     notify(callers_queue, result)
     {:noreply, %State{state | callers_queue: []}}
   end
 
   defp notify(callers_queue, reply) do
-    Enum.each(callers_queue, &(GenServer.reply(&1, reply)))
+    Enum.each(callers_queue, &GenServer.reply(&1, reply))
   end
 end

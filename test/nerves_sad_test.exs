@@ -32,9 +32,11 @@ defmodule NervesSAD.Test do
 
     test "read parallel" do
       device = :test_parallel
-      {:ok, _pid} = NervesSAD.start_link(device,
-        fn ->
-          Process.sleep(400)  # :-(
+
+      {:ok, _pid} =
+        NervesSAD.start_link(device, fn ->
+          # :-(
+          Process.sleep(400)
           :rand.normal()
         end)
 
