@@ -18,7 +18,7 @@ defmodule NervesSAD.Mixfile do
 
   defp deps do
     [
-      {:excoveralls, "~> 0.9.0", only: :test}
+      {:excoveralls, "~> 0.12.2", only: :test}
     ]
   end
 end
